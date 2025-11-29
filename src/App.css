@@ -40,3 +40,179 @@
 .read-the-docs {
   color: #888;
 }
+
+
+.dashboard {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.lista-productos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  width: 100%;
+  max-width: 920px;
+}
+
+.tarjeta-producto {
+  flex: 0 0 200px;
+  box-sizing: border-box;
+  background: #fff;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 8px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dashboard-carrito {
+  width: 280px;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.08);
+  padding: 12px;
+  border-radius: 8px;
+  background: #fff;
+  height: fit-content;
+}
+
+.lista-carrito {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px 0;
+}
+.item-carrito {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid #eee;
+}
+.item-control { display:flex; align-items:center; gap:6px }
+.btn-cant { 
+  width:28px; 
+  height:28px; 
+  background: #f2f2f2; 
+  border: 1px solid #bbb; 
+  border-radius: 4px; 
+  cursor:pointer; 
+}
+.btn-cant:hover { background:#ddd; }
+
+.dashboard-footer { margin-top:12px; display:flex; flex-direction:column; gap:8px }
+
+
+
+
+.pago {
+  max-width: 700px;
+  margin: 30px auto;
+  text-align: left;
+  background: #ffffff;
+  padding: 22px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  border: 1px solid #e6e6e6;
+}
+
+.item-pago {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 4px;
+  font-size: 17px;
+  border-bottom: 1px solid #ddd;
+}
+
+.btn-cantidad {
+  background: #f2f2f2;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: 0.2s;
+}
+.btn-cantidad:hover {
+  background: #ddd;
+}
+
+.btn-accion {
+  background: red;
+  color: white;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+.btn-accion:hover {
+  background: darkred;
+}
+
+@media (max-width: 800px) {
+  .dashboard { flex-direction: column; align-items: center }
+  .dashboard-carrito { width: 95%; }
+  .tarjeta-producto { flex: 0 0 160px }
+}
+
+.modal-login {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal-label {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.modal-input {
+  padding: 8px;
+  border-radius: 5px;
+  border: solid 1px #aaa;
+}
+
+.modal-botones {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.modal-btn-ingresar {
+  background: green;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: none;
+}
+
+.modal-btn-cancelar {
+  background: grey;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: none;
+}

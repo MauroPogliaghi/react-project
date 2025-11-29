@@ -1,35 +1,107 @@
-const productosLocales = [
-  { id: 1, name: "Auriculares Bluetooth", price: 100, image: "https://cdn.pixabay.com/photo/2017/03/06/22/41/headphones-2121017_1280.jpg" },
-  { id: 2, name: "Teclado Mecánico", price: 98, image: "https://cdn.pixabay.com/photo/2016/11/29/03/53/keyboard-1869230_1280.jpg" },
-  { id: 3, name: "Mouse Gamer", price: 38, image: "https://cdn.pixabay.com/photo/2016/11/29/09/18/mouse-1869780_1280.jpg" },
-  { id: 4, name: "Monitor 24''", price: 66, image: "https://cdn.pixabay.com/photo/2015/05/31/13/33/monitor-791898_1280.jpg" },
-  { id: 5, name: "Webcam HD", price: 66, image: "https://cdn.pixabay.com/photo/2016/11/29/08/04/webcam-1869544_1280.jpg" },
-  { id: 6, name: "Micrófono USB", price: 92, image: "https://cdn.pixabay.com/photo/2017/01/20/00/30/microphone-1996490_1280.jpg" },
-  { id: 7, name: "Mousepad Gamer", price: 39, image: "https://cdn.pixabay.com/photo/2017/06/06/21/55/mousepad-2384843_1280.jpg" },
-  { id: 8, name: "Gabinete PC", price: 39, image: "https://cdn.pixabay.com/photo/2015/05/31/12/44/computer-791846_1280.jpg" },
-  { id: 9, name: "Placa de Video", price: 16, image: "https://cdn.pixabay.com/photo/2014/05/02/21/50/video-card-336679_1280.jpg" },
-  { id: 10, name: "Fuente de Poder", price: 55, image: "https://cdn.pixabay.com/photo/2014/04/03/00/41/power-supply-311342_1280.jpg" }
-];
+import { useNavigate } from "react-router-dom";
 
-import { useState, useEffect } from "react";
+function ListaProductos({
+  productos,
+  setProductos,
+  agregarAlCarrito,
+  carrito = [],
+  usuario,
+  modoAdmin,
+  sumarCantidad,
+  restarCantidad,
+  subtotal,
+  iniciarSesion,
+  irAPagar,
+}) {
+  const navigate = useNavigate();
 
-function ListaProductos({ agregarAlCarrito }) {
-  const [productos, setProductos] = useState([]);
+  const eliminarProducto = (id) => {
+    setProductos((prev) => prev.filter((p) => p.id !== id));
+  };
 
-  useEffect(() => {
-    setProductos(productosLocales);
-  }, []);
+  const editarProducto = (id) => {
+  const producto = productos.find(p => p.id === id);
+  navigate(`/producto/editar/${id}`, { state: { producto } });
+};
+
+
+  const agregarProductoNuevo = () => {
+    navigate("/producto/nuevo");
+  };
 
   return (
-    <div className="lista-productos">
-      {productos.map((producto) => (
-        <div key={producto.id} className="tarjeta-producto">
-          <img src={producto.image} alt={producto.name} width={150} />
-          <h3>{producto.name}</h3>
-          <p>Precio: ${producto.price}</p>
-          <button onClick={() => agregarAlCarrito(producto)}>Agregar al carrito</button>
+    <div className="dashboard">
+
+      {modoAdmin && (
+        <div style={{ marginBottom: 20 }}>
+          <button onClick={agregarProductoNuevo} style={{ background: "green", color: "#fff" }}>
+            ➕ Agregar producto
+          </button>
         </div>
-      ))}
+      )}
+
+      <div className="lista-productos">
+        {productos.map((producto) => (
+          <div key={producto.id} className="tarjeta-producto">
+            <img src={producto.image} alt={producto.name} width={150} />
+            <h3>{producto.name}</h3>
+            <p>Precio: ${producto.price}</p>
+
+            <button onClick={() => agregarAlCarrito(producto)}>
+              Agregar al carrito
+            </button>
+
+            {modoAdmin && (
+              <div style={{ marginTop: 10 }}>
+                <button
+                  onClick={() => editarProducto(producto.id)}
+                  style={{ background: "blue", color: "#fff", marginRight: 5 }}
+                >
+                  ✏️ Editar
+                </button>
+                <button
+                  onClick={() => eliminarProducto(producto.id)}
+                  style={{ background: "red", color: "#fff" }}
+                >
+                  🗑 Eliminar
+                </button>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <aside className="dashboard-carrito">
+        <h3>Carrito</h3>
+        {carrito.length === 0 ? (
+          <p>El carrito está vacío.</p>
+        ) : (
+          <ul className="lista-carrito">
+            {carrito.map((item) => (
+              <li key={item.id} className="item-carrito">
+                <span className="item-nombre">{item.name}</span>
+                <div className="item-control">
+                  <button onClick={() => restarCantidad(item.id)} className="btn-cant">-</button>
+                  <span className="item-cantidad">{item.quantity}</span>
+                  <button onClick={() => sumarCantidad(item.id)} className="btn-cant">+</button>
+                </div>
+                <span className="item-sub">${(item.price * item.quantity).toFixed(2)}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        <div className="dashboard-footer">
+          <strong>Subtotal: ${subtotal.toFixed(2)}</strong>
+          <div className="acciones">
+            {!usuario ? (
+              <button onClick={iniciarSesion}>Iniciar sesión y pagar</button>
+            ) : (
+              <button onClick={irAPagar}>Ir a pagar</button>
+            )}
+          </div>
+        </div>
+      </aside>
     </div>
   );
 }
